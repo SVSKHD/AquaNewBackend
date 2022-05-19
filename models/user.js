@@ -13,9 +13,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "subscriber",
     },
-    phone:{
-      type:Number,
-    },
     cart: {
       type: Array,
       default: [],

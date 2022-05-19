@@ -14,10 +14,6 @@ const orderSchema = new mongoose.Schema(
         color: String,
       },
     ],
-    RazorPay: {
-      type: ObjectId,
-      ref: "Razor",
-    },
     paymentIntent: {},
     orderStatus: {
       type: String,
@@ -30,19 +26,6 @@ const orderSchema = new mongoose.Schema(
         "Cancelled",
         "Completed",
       ],
-    },
-    userDetails: {
-      id: { type: String },
-      name: {
-        type: String,
-      },
-      email: {
-        type: String,
-      },
-      phone: {
-        type: String,
-      },
-      address: String,
     },
     orderdBy: { type: ObjectId, ref: "User" },
   },
