@@ -5,7 +5,7 @@ const nanoid = new ShortUniqueId({length:5})
 
 
 exports.createInvoice = async (req, res) => {
-   
+  const Months = ["jan" , "feb" , "mar" , "Aip" , "may" , "jun" , "jul" , "aug" , "sep" , "oct" , "nov" , "dec"]
     const Month = new Date().getMonth()+1;
     const day = new Date().getDate();
     const year = new Date().getFullYear();
@@ -46,6 +46,14 @@ exports.createInvoice = async (req, res) => {
     res.json(Invoices);
   };
 
+
+  exports.getGstInvoices = async (req, res , gst) => {
+    let Invoices = await Invoice.find({gstInvoice:true})
+      .limit(parseInt(req.params.count))
+      .sort([["createdAt", "desc"]])
+      .exec();
+    res.json(Invoices);
+  };
 
   
 const handleName = async(req,res , query)=>{
