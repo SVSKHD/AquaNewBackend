@@ -1,14 +1,16 @@
+const { default: ShortUniqueId } = require("short-unique-id");
 const Invoice = require("../models/invoices")
 const id = require("shortid");
+const nanoid = new ShortUniqueId({length:5})
 
 
 exports.createInvoice = async (req, res) => {
-    const Months = ["jan" , "feb" , "mar" , "Aip" , "may" , "jun" , "jul" , "aug" , "sep" , "oct" , "nov" , "dec"]
-    const Month = new Date().getMonth();
+   
+    const Month = new Date().getMonth()+1;
     const day = new Date().getDate();
     const year = new Date().getFullYear();
     const MonthName = Months[Month]
-    const todaysDate = `${day}/${Months[Month]}/${year}`;
+    const todaysDate = `${day}/${Month}/${year}`;
     try {
       const { name, phone, email, Type, address ,product, date , price , quantity ,serial ,  isAquakartUser , aquakartuser } = req.body;
       res.json(
@@ -25,7 +27,7 @@ exports.createInvoice = async (req, res) => {
           aquakartuser,
           serial,
           date: todaysDate,
-          InvoiceNo:`${MonthName}-${id.generate()}`,
+          InvoiceNo:`AQB${MonthName}-${nanoid()}`,
           Id: id.generate(),
         }).save()
       );
