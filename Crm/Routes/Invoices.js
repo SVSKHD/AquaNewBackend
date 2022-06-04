@@ -1,23 +1,22 @@
-const express = require("express")
-const server = express.Router()
-const {createInvoice , getInvoices , getGstInvoices , filters , deleteInvoice, updateInvoice} = require("../Controllers/invoice")
+const express = require("express");
+const Server = express.Router();
+const {
+  createInvoice,
+  updateInvoice,
+  deleteInvoice,
+  getInvoices,
+} = require("../Controllers/invoice");
 
-// createinvoice
-server.post("/invoice" , createInvoice)
-// getinvoice
-server.get("/invoiceload" , getInvoices)
-//getgstinvoice
-server.get("/getgstinvoice" , getGstInvoices)
-// invoicefilter
-server.post("/invoicefilter" , filters)
-// updateinvoice
-server.put("/invoice/:name" , updateInvoice)
-// deleteInvoice
-server.delete("/invoice/:name" , deleteInvoice)
+//get
+Server.get("/invoices", getInvoices);
+//post
+Server.post("/invoice-create", createInvoice);
 
+//put
+Server.put("/invoice-update", updateInvoice);
 
+//delete
 
+Server.delete("/invoice-delete/:name", deleteInvoice);
 
-
-
-module.exports = server
+module.exports = Server;

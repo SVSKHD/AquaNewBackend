@@ -4,56 +4,147 @@ const id = require("shortid");
 const nanoid = new ShortUniqueId({length:5})
 
 
+
 exports.createInvoice = async (req, res) => {
-  const Months = ["jan" , "feb" , "mar" , "Aip" , "may" , "jun" , "jul" , "aug" , "sep" , "oct" , "nov" , "dec"]
-    const Month = new Date().getMonth()+1;
-    const day = new Date().getDate();
-    const year = new Date().getFullYear();
-    const MonthName = Months[Month]
-    const todaysDate = `${day}/${Month}/${year}`;
-    try {
-      const { name, phone, email, Type, address ,product, date , price , quantity ,serial ,  isAquakartUser , aquakartuser } = req.body;
-      res.json(
-        await new Invoice({
-          name,
-          phone,
-          address,
-          email,
-          Type,
-          product,
-          price,
-          quantity,
-          isAquakartUser:false,
-          aquakartuser,
-          serial,
-          date: todaysDate,
-          InvoiceNo:`AQB${MonthName}-${nanoid()}`,
-          Id: id.generate(),
-        }).save()
-      );
-    } catch (err) {
-      console.log(err);
-      res.status(400).send("Creating Your Crm Invoice Failed");
-    }
-  };
+  const Months = [
+    "jan",
+    "feb",
+    "mar",
+    "Aip",
+    "may",
+    "jun",
+    "jul",
+    "aug",
+    "sep",
+    "oct",
+    "nov",
+    "dec",
+  ];
+  const Month = new Date().getMonth() + 1;
+  const day = new Date().getDate();
+  const year = new Date().getFullYear();
+  const MonthName = Months[Month];
+  const todaysDate = `${day}/${Month}/${year}`;
+  try {
+    const {
+      name,
+      phone,
+      address,
+      email,
+      //gst
+      gst,
+      gstNo,
+      gstAddress,
+      gstEmail,
+      gstName,
+      //product
+      productName,
+      productPrice,
+      productQuantity,
+      productSerialNo,
+      //payment
+      paymentType,
+      paymentDetails,
+      paidAmount,
+      deliveredBy,
+      deliveryStatus,
+    } = req.body;
+    res.json(
+      await new Invoice({
+        //customer
+        name,
+        phone,
+        address,
+        email,
+        //gst
+        gst,
+        gstNo,
+        gstAddress,
+        gstEmail,
+        gstName,
+        //product
+        productName,
+        productPrice,
+        productQuantity,
+        productSerialNo,
+        //payment
+        paymentType,
+        paymentDetails,
+        paidAmount,
+        deliveredBy,
+        deliveryStatus,
+        date: todaysDate,
+        InvoiceNo: `AQB${MonthName}-${id.generate()}}`,
+      }).save()
+    );
+  } catch (err) {
+    console.log(err);
+    res.status(400).send("Creating Your Crm Invoice Failed");
+  }
+};
 
+exports.updateInvoice = async (req, res) => {
+  try {
+    const {
+      name,
+      phone,
+      address,
+      email,
+      //gst
+      gst,
+      gstNo,
+      gstAddress,
+      gstEmail,
+      gstName,
+      //product
+      productName,
+      productPrice,
+      productQuantity,
+      productSerialNo,
+      //payment
+      paymentType,
+      paymentDetails,
+      paidAmount,
+      deliveredBy,
+      deliveryStatus,
+    } = req.body;
+    const updated = await Invoice.findOneAndUpdate(
+      { name: req.params.name },
+      req.body,
+      { new: true }
+    ).exec();
+    res.json(updated);
+  } catch (err) {
+    console.log("Contact UPDATE ERROR ----> ", err);
+    // return res.status(400).send("Product update failed");
+    res.status(400).json({
+      err: err.message,
+    });
+  }
+};
 
-  exports.getInvoices = async (req, res) => {
+exports.deleteInvoice = async (req, res) => {
+  try {
+    const deleted = await Invoice.findOneAndRemove({
+      name: req.params.name,
+    }).exec();
+    res.json(deleted);
+  } catch (err) {
+    console.log(err);
+    return res.staus(400).send("Invoice delete failed");
+  }
+};
+
+exports.getInvoices =async() =>{
     let Invoices = await Invoice.find({})
-      .limit(parseInt(req.params.count))
-      .sort([["createdAt", "desc"]])
-      .exec();
-    res.json(Invoices);
-  };
+    .limit(parseInt(req.params.count))
+    .sort([["createdAt", "desc"]])
+    .exec();
+  res.json(Invoices);
+}
 
 
-  exports.getGstInvoices = async (req, res , gst) => {
-    let Invoices = await Invoice.find({gstInvoice:true})
-      .limit(parseInt(req.params.count))
-      .sort([["createdAt", "desc"]])
-      .exec();
-    res.json(Invoices);
-  };
+
 
   
 const handleName = async(req,res , query)=>{
@@ -116,32 +207,3 @@ const handleName = async(req,res , query)=>{
     }
   };
 
-  exports.updateInvoice = async (req, res) => {
-    try {
-      const { name, phone, email, Type, product , quantity , InvoiceNo , isAquakartUser} = req.body;
-      const updated = await Invoice.findOneAndUpdate(
-        { name: req.params.name },
-        req.body,
-        { new: true }
-      ).exec();
-      res.json(updated);
-    } catch (err) {
-      console.log("Contact UPDATE ERROR ----> ", err);
-      // return res.status(400).send("Product update failed");
-      res.status(400).json({
-        err: err.message,
-      });
-    }
-  };
-
-  exports.deleteInvoice=async(req,res)=>{
-    try {
-        const deleted = await Invoice.findOneAndRemove({
-          name : req.params.name,
-        }).exec();
-        res.json(deleted);
-      } catch (err) {
-        console.log(err);
-        return res.staus(400).send("Invoice delete failed");
-      }
-  }

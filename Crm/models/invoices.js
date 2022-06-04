@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 
 const invoiceSchema = mongoose.Schema(
   {
+    invoiceNo:{
+     type:String
+    },
     name: {
       type: String,
       unique: true,
@@ -10,43 +13,66 @@ const invoiceSchema = mongoose.Schema(
       type: String,
     },
     address: {
-      type: String
+      type: String,
     },
     phone: {
       type: Number,
       unique: true,
     },
-    product: {
-      type: String,
-    },
-    quantity: {
-      type: Number,
-    },
-    price: {
-      type: Number,
-    },
-    date: {
-      type: String,
-    },
-    Id: {
-      type: String,
-    },
-    InvoiceNo: {
-      type: String
-    },
-    serial: {
-      type: String
-    },
-    isAquakartUser: {
-      default: false,
+    //gst status
+    gst: {
       type: Boolean,
+      default: false,
     },
-    aquakartuser: {
-      type: String
+    gstName: {
+      type: String,
+      default: false,
     },
-    Type: {
+    gstPhone: {
+      type: Number,
+      default: false,
+    },
+    gstNo: {
+      type: Number,
+      default: false,
+    },
+    gstAddress: {
+      type: String,
+      default: false,
+    },
+
+    //product details
+    productName: {
       type: String,
     },
+    productQuantity: {
+      type: Number,
+    },
+    productPrice: {
+      type: Number,
+    },
+    productSerialNo: {
+      type: String,
+    },
+    //paymentdetails
+    paymentType: {
+      type: String,
+    },
+    paymentDetails: {
+      type: String,
+    },
+    paidAmount: {
+      type: Number,
+    },
+    deliveredBy: {
+      type: String,
+    },
+    deliveryStatus: {
+      type: String,
+    },
+    date:{
+      type:String
+    }
   },
   { timestamps: true }
 );
