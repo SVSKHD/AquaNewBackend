@@ -12,6 +12,9 @@ const CrmUserSchema = new mongoose.Schema({
   password: {
     type: String,
   },
+  userType:{
+    type:String
+  },
   token: {
     type: String,
   },
