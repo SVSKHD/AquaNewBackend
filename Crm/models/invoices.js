@@ -7,7 +7,6 @@ const invoiceSchema = mongoose.Schema(
     },
     name: {
       type: String,
-      unique: true,
     },
     email: {
       type: String,
@@ -33,7 +32,7 @@ const invoiceSchema = mongoose.Schema(
       default: false,
     },
     gstNo: {
-      type: Number,
+      type: String,
       default: false,
     },
     gstAddress: {

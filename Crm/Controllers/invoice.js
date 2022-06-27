@@ -131,13 +131,12 @@ exports.deleteInvoice = async (req, res) => {
     res.json(deleted);
   } catch (err) {
     console.log(err);
-    return res.staus(400).send("Invoice delete failed");
+    return res.status(400).send("Invoice delete failed");
   }
 };
 
-exports.getInvoices =async() =>{
+exports.getInvoices =async(req,res) =>{
     let Invoices = await Invoice.find({})
-    .limit(parseInt(req.params.count))
     .sort([["createdAt", "desc"]])
     .exec();
   res.json(Invoices);
@@ -174,6 +173,13 @@ const handleName = async(req,res , query)=>{
   const handlePrice = async(req,res,query)=>{
       const InvoicePrice = await Invoice.find({price:query}).exec()
       res.json(InvoicePrice)
+  }
+
+
+  exports.sendIndividualInvoice =async (req,res , query) =>{
+    let name = req.params.name
+    const invoiceData = await Invoice.find({name:name}).exec()
+    res.json(invoiceData)
   }
   
   

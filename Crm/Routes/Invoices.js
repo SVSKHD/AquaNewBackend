@@ -5,6 +5,7 @@ const {
   updateInvoice,
   deleteInvoice,
   getInvoices,
+  sendIndividualInvoice
 } = require("../Controllers/invoice");
 
 //get
@@ -18,5 +19,8 @@ Server.put("/invoice-update", updateInvoice);
 //delete
 
 Server.delete("/invoice-delete/:name", deleteInvoice);
+
+//search
+Server.get("/individualinvoice/:name" , sendIndividualInvoice)
 
 module.exports = Server;
