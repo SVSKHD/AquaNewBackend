@@ -14,7 +14,7 @@ Server.get("/invoices", getInvoices);
 Server.post("/invoice-create", createInvoice);
 
 //put
-Server.put("/invoice-update", updateInvoice);
+Server.put("/invoice-update/:name", updateInvoice);
 
 //delete
 
