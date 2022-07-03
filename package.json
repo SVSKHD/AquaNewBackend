@@ -32,6 +32,7 @@
     "stripe": "^8.104.0",
     "swagger-ui-express": "^4.1.6",
     "uniqueid": "^1.0.0",
+    "uuid": "^8.3.2",
     "yamljs": "^0.3.0"
   }
 }

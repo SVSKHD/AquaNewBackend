@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const invoiceSchema = mongoose.Schema(
   {
-    invoiceNo:{
+    invoiceSerialNo:{
      type:String
     },
     name: {

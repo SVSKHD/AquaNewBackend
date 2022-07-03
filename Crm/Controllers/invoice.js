@@ -1,7 +1,6 @@
-const { default: ShortUniqueId } = require("short-unique-id");
 const Invoice = require("../models/invoices")
 const id = require("shortid");
-const nanoid = new ShortUniqueId({length:5})
+const shortid = require('shortid');
 
 
 
@@ -25,6 +24,7 @@ exports.createInvoice = async (req, res) => {
   const year = new Date().getFullYear();
   const MonthName = Months[Month];
   const todaysDate = `${day}/${Month}/${year}`;
+  let id = `AQB-${todaysDate}-${shortid.generate()}`
   try {
     const {
       name,
@@ -74,7 +74,7 @@ exports.createInvoice = async (req, res) => {
         deliveredBy,
         deliveryStatus,
         date: todaysDate,
-        InvoiceNo: `AQB${MonthName}-${id.generate()}}`,
+        invoiceSerialNo: id,
       }).save()
     );
   } catch (err) {
